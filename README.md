@@ -31,7 +31,7 @@ Modelo User.rb #Sólo cómo ejemplo
 
 <pre><code>
     class User &lt; ActiveRecord::Base 
-      acts_as_realtime do |ws, channel, inst| 
+      acts_as_realtime(self, '#users-table > tbody:first') do |ws, channel, inst| 
         html = "&lt;tr&gt;&lt;td&gt;&lt;div class=" + '"prueba1"' + " &gt; #{inst.nombre} &lt;/div&gt;&lt;/td&gt;&lt;td&gt;R&lt;/td&gt;&lt;td&gt;o&lt;/td&gt;&lt;td&gt;R&lt;/td&gt;&lt;/tr&gt;" 
         [RoRRT, html] #Este arreglo debe de enviarse de esta manera estrictamente para el buen funcionamiento de la gema. 
       end 
@@ -45,6 +45,7 @@ Los parámetros que necesita la gema los podemos dividir en obligatorios y opcio
 
 ####Obligatorios
 
++ Modelo: es la clase del modelo que queremos darle la funcionalidad de tiempo real, puede ser self o el nombre de la clase
 + El bloque, en el cual su última sentencia debe de ser un arreglo, donde el primer elemento corresponde al módulo
 de nuestra aplicación de rails, es este caso mi applicación se llama RoRRT, es por eso que así se llama el módulo,
 el segundo elemento debe de ser la estructura del html que queremos que se inserte en nuestro index. Básicamente
@@ -61,7 +62,7 @@ otra posible opción es un append.
 En este caso la llamada sería la siguiente:
 
 <pre><code>
-    acts_as_realtime({selector: '#users-table > tbody:first', insertion_method: 'append'}) do |ws, channel, inst| 
+    acts_as_realtime(self, '#users-table > tbody:first', 'append') do |ws, channel, inst| 
         html = "&lt;tr&gt;&lt;td&gt;&lt;div class=" + '"prueba1"' + " &gt; #{inst.nombre} &lt;/div&gt;&lt;/td&gt;&lt;td&gt;R&lt;/td&gt;&lt;td&gt;o&lt;/td&gt;&lt;td&gt;R&lt;/td&gt;&lt;/tr&gt;" 
         [RoRRT, html] #Este arreglo debe de enviarse de esta manera estrictamente para el buen funcionamiento de la gema. 
       end 
