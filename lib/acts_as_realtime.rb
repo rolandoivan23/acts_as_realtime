@@ -49,7 +49,7 @@ module ActsAsRealTime
 
   module ClassMethods
 
-    def acts_as_realtime(modelo, config_params = {selector: nil, insertion_method: 'prepend'}, &blk)
+    def acts_as_realtime(modelo, selector, insertion_method = 'prepend', &blk)
 
 =begin
     Se había manejado cómo posible solución el manejar un token(*-*)
@@ -84,7 +84,7 @@ module ActsAsRealTime
           res_yield = yield ActsAsRealTime.ws, ActsAsRealTime.channel, self if block_given?
           ActsAsRealTime.mod_app, ActsAsRealTime.html = res_yield[0], res_yield[1]
           ActsAsRealTime.mod_app::Application.config.chanel = ActsAsRealTime::channel
-          ActsAsRealTime.mod_app::Application.config.chanel.push "$('#{config_params[:selector]}').#{config_params[:insertion_method]}('#{ActsAsRealTime.html}');"
+          ActsAsRealTime.mod_app::Application.config.chanel.push "$('#{selector}').#{insertion_method}('#{ActsAsRealTime.html}');"
         end
         after_create :update_index
       }
