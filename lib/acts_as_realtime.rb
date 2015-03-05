@@ -3,7 +3,7 @@ require 'em-websocket'
 
 module ActsAsRealTime
 
-  class << self; attr_accessor :ws, :channel, :mod_app, :html; end
+  class << self; attr_accessor :ws, :channel, :mod_app, :html, :port, :selector, :host, :insert_method; end
 
   def self.startup_web_socket_server
     Thread.new {
@@ -19,6 +19,7 @@ module ActsAsRealTime
 
               ws.onmessage { |msg|
                 #@channel.push "<#{sid}>: #{msg}"
+                puts msg
               }
 
               ws.onclose {
@@ -47,28 +48,51 @@ module ActsAsRealTime
   end
 
   module ClassMethods
-    def acts_as_realtime &blk
-#      puts "ESTA GEMARA HARA QUE LAS APLICACIONES DE RAILS REVOLUCIONEN INCREIBLEMENTE"
 
-      res_yield = yield ActsAsRealTime.ws, ActsAsRealTime.channel if block_given?
-      ActsAsRealTime.mod_app, ActsAsRealTime.html = res_yield[0], res_yield[1]
-      ActsAsRealTime.mod_app::Application.config.chanel = ActsAsRealTime::channel
-      puts "EL HTML DEBE DE SER ASI: #{ActsAsRealTime.html}"
+    def acts_as_realtime(html, config_params = {selector: '#users-table > tbody:first', insertion_method: 'prepend'}, &blk)
 
+=begin
+    Se había manejado cómo posible solución el manejar un token(*-*)
+    para interporlar los valores de los registros que se estan creando, cómo
+    por ejemplo el nombre de un usuario.
+
+    La idea consistia que el nombre del campo que se quiere interpolar debe de ir entre el token
+    identificador(*-*) en el html que sea pasado a la gema, para se parseado(interpolado) por la gema.
+    Ej:
+
+    html = "<tr><td><div class=" + '"prueba1"' + " > *-*#{'nombre'}*-* </div></td><td>R</td><td>o</td><td>R</td></tr>"
+
+    Esta solución puede causar problemas futuros, es por eso que se busco otra solución, que es el código
+    actual, esto se deja comentado por si se necesitara usar despues
+
+
+
+      start_index = html.index("*-*")
+      sub_html = html[start_index+3..-1]
+      finish_index = sub_html.index('*-*') + 2
+      attr = sub_html[0..finish_index-3]
+
+
+=end
+
+      #Se define el método update_index en lo modelos que se ejecute el método acts_as_real_time
       ActiveRecord::Base.class_eval {
-
         define_method(:update_index) do
-          puts "SI SE EJECUTA EL UPDATE INDEX-----------++++++++++++++++-------------"
-          ActsAsRealTime.mod_app::Application.config.chanel.push "$('#users-table > tbody:first').prepend('<tr><td>#{ActsAsRealTime.html}</td><td>R</td><td>o</td><td>R</td></tr>');"
 
+          #eval("html[start_index..finish_index] = #{attr}") Esta instrucción se usaba para la solución que se planteó arriba
 
+          res_yield = yield ActsAsRealTime.ws, ActsAsRealTime.channel, self if block_given?
+          ActsAsRealTime.mod_app, ActsAsRealTime.html = res_yield[0], res_yield[1]
+          ActsAsRealTime.mod_app::Application.config.chanel = ActsAsRealTime::channel
+          ActsAsRealTime.mod_app::Application.config.chanel.push "$('#{config_params[:selector]}').#{config_params[:insertion_method]}('#{ActsAsRealTime.html}');"
         end
         after_create :update_index
-
       }
     end
   end
 
+=begin
+Estos métodos no se usa actualmente, se deja comentado cómo ejemplo para modificaciones o mejoras futuras
   def self.define_adders_methods app
     eval "#{app}::Aplication.class_eval {" +
       "define_method(:save_communication_variables, :ws, :channel){" +
@@ -78,6 +102,7 @@ module ActsAsRealTime
     "}"
   end
 end
+=end
 
 ActiveRecord::Base.send :include, ActsAsRealTime
 =begin
