@@ -49,7 +49,7 @@ module ActsAsRealTime
 
   module ClassMethods
 
-    def acts_as_realtime(config_params = {selector: nil, insertion_method: 'prepend'}, &blk)
+    def acts_as_realtime(modelo, config_params = {selector: nil, insertion_method: 'prepend'}, &blk)
 
 =begin
     Se había manejado cómo posible solución el manejar un token(*-*)
@@ -76,7 +76,7 @@ module ActsAsRealTime
 =end
 
       #Se define el método update_index en lo modelos que se ejecute el método acts_as_real_time
-      ActiveRecord::Base.class_eval {
+      modelo.class_eval {
         define_method(:update_index) do
 
           #eval("html[start_index..finish_index] = #{attr}") Esta instrucción se usaba para la solución que se planteó arriba
