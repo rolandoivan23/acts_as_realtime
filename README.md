@@ -30,7 +30,7 @@ Ejemplo páctico:
 Modelo User.rb #Sólo cómo ejemplo
 
 <pre><code>
-    class User < ActiveRecord::Base 
+    class User &lt; ActiveRecord::Base 
       acts_as_realtime do |ws, channel, inst| 
         html = "&lt;tr&gt;&lt;td&gt;&lt;div class=" + '"prueba1"' + " &gt; #{inst.nombre} &lt;/div&gt;&lt;/td&gt;&lt;td&gt;R&lt;/td&gt;&lt;td&gt;o&lt;/td&gt;&lt;td&gt;R&lt;/td&gt;&lt;/tr&gt;" 
         [RoRRT, html] #Este arreglo debe de enviarse de esta manera estrictamente para el buen funcionamiento de la gema. 
