@@ -101,8 +101,8 @@ Estos métodos no se usa actualmente, se deja comentado cómo ejemplo para modif
       "}" +
     "}"
   end
-end
 =end
+end
 
 ActiveRecord::Base.send :include, ActsAsRealTime
 =begin
