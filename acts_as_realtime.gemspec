@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'acts_as_realtime'
-  s.version     = '0.0.5'
+  s.version     = '0.0.6'
   s.date        = '2015-03-05'
   s.summary     = "RoR realtime apps"
   s.description = "Gem for add realtime functionality for ruby on rails apps, it use em-websocket gem sor use websockets and channels"
