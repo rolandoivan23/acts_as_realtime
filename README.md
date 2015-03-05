@@ -5,7 +5,7 @@ acts_as_realtime pretende ayudar a implementar index en los que se puedan insert
 en tiempo real, esto es al mismo instante en que se crean los registros del modelo al que corresponde el index que
 queremos modificar en tiempo real. Esta gema esta pensada para ser usada en aplicaciones de rails.
 
-##Instalaión
+##Instalación
 
 Gemfile
 
