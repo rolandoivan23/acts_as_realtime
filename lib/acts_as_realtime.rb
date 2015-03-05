@@ -49,7 +49,7 @@ module ActsAsRealTime
 
   module ClassMethods
 
-    def acts_as_realtime(html, config_params = {selector: '#users-table > tbody:first', insertion_method: 'prepend'}, &blk)
+    def acts_as_realtime(config_params = {selector: nil, insertion_method: 'prepend'}, &blk)
 
 =begin
     Se había manejado cómo posible solución el manejar un token(*-*)
