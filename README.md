@@ -77,7 +77,7 @@ En el bloque que enviamos a la gema también nos manda cierto parametros que pue
 poder enviar el html que queremos con la nueva información cómo se muestra en el ejemplo.
 
 Nota: Los dos primeros objetos pueden ser de gran utilidad para otras funcionalidades, es por ello que los manda la gema, pero
-ellos no se van a tocar a fondo, para conocerlos más puede ver la documentación de [EM WebSocket]('https://github.com/igrigorik/em-websocket')
+ellos no se van a tocar a fondo, para conocerlos más puede ver la documentación de [EM WebSocket](https://github.com/igrigorik/em-websocket)
 
 La parte de la vista puedes poner el siguiente código en tu application.html.erb
 
