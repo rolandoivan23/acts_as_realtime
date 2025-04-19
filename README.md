@@ -33,10 +33,15 @@ Modelo User.rb #Sólo cómo ejemplo
     class User &lt; ActiveRecord::Base 
       acts_as_realtime(self, '#users-table > tbody:first') do |ws, channel, inst| 
         html = "&lt;tr&gt;&lt;td&gt;&lt;div class=" + '"prueba1"' + " &gt; #{inst.nombre} &lt;/div&gt;&lt;/td&gt;&lt;td&gt;R&lt;/td&gt;&lt;td&gt;o&lt;/td&gt;&lt;td&gt;R&lt;/td&gt;&lt;/tr&gt;" 
-        [RoRRT, html] #Este arreglo debe de enviarse de esta manera estrictamente para el buen funcionamiento de la gema. 
+        [Blog, html] #Este arreglo debe de enviarse de esta manera estrictamente para el buen funcionamiento de la gema. 
       end 
     end
 </code></pre>
+
+Que es Blog??
+
+Es el modulo base de la aplicacion, se genera en vase al nombre que le des a tu aplicacion al correr rails new blog por dar un ejemplo,
+si no estas seguro como esta definido este podulo deberias poder verlo en el archivo config/application.rb
 
 Nota: Todas las comillas de propiedades como la de class, id, style, etc deben de ser estrictamente como comillas dobles, es por 
 esta razón la concatenación que se usa en este ejemplo.
