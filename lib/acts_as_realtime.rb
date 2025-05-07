@@ -86,7 +86,8 @@ module ActsAsRealTime
           ActsAsRealTime.mod_app::Application.config.chanel = ActsAsRealTime::channel
           ActsAsRealTime.mod_app::Application.config.chanel.push "$('#{selector}').#{insertion_method}('#{ActsAsRealTime.html}');"
         end
-        after_create :update_index
+        #TODO: remove on: create in order to remove and update in realtime
+        after_commit :update_index, on: :create
       }
     end
   end
